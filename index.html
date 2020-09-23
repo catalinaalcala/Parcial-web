@@ -1,70 +1,197 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
 
     <title>Parcial 1</title>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" 
-    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <script src="main.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.google.com/specimen/Satisfy?query=Satisfy"
+    />
+    <link rel="stylesheet" href="styles.css" />
 
-</head>
-<body class="container">
-    <header class="d-flex justify-content-between align-items-center mt-3">
-        <h1>Restaurant & Lounge</h1>
-        <div class="text-right">
-            <img src="img/carrito.png" alt="carrito" height="10%" width="10%">
-            <small><span id="num-items">1</span> items</small>
+    <script src="main.js"></script>
+  </head>
+  <body class="container">
+    <div class="modal fade" id="modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Cancel the order</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span>&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">Are you sure about cancelling the order?</div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-confirm"
+              data-dismiss="modal"
+              onclick="cleanCart()"
+            >
+              Yes, I want to cancel the order
+            </button>
+            <button type="button" class="btn btn-cancel" data-dismiss="modal">
+              No, I want to continue adding products
+            </button>
+          </div>
         </div>
-    </header>
-    <hr>
-    <img src="img/header.png" alt="hamburguesa">
-    <hr>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-3">
-        <ul class="navbar-nav m-3">
-            <li class="nav-item active">
-                <a class="nav-link mr-3" data-toggle="tab" href="#burgers" >Burgers <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link mr-3" data-toggle="tab" href="#tacos" aria-controls="tacos">Tacos <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link mr-3" data-toggle="tab" href="#salads">Salads <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link mr-3" data-toggle="tab" href="#deserts">Desserts <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link mr-3" data-toggle="tab" href="#drinks-sides">Drinks & Sides <span class="sr-only">(current)</span></a>
-            </li>   
-        </ul>
-    </nav>
-    <hr>
-    <div>
-        <div class="tab-pane fade show active" id="burgers">
-            <h1 class="text-center"><strong>Burgers</strong></h1>
-            <hr>
-            <div id="burgers-info"></div>
-        </div>
-        <div class="tab-pane fade" id="tacos" aria-labelledby="tacos">
-            <h1 class="text-center"><strong>Tacos</strong></h1>
-            <hr>
-            <div id="burgers-info"></div>
-        </div>
-        <div class="tab-pane fade" id="salads">
-            <h1 class="text-center"><strong>Salads</strong></h1>
-            <hr>
-            <div id="burgers-info"></div>
-        </div>
-        <div class="tab-pane fade" id="deserts">
-            <h1 class="text-center"><strong>Desserts</strong></h1>
-            <hr>
-            <div id="burgers-info"></div>
-        </div>
+      </div>
     </div>
 
-</body>
+    <header class="d-flex align-items-center mt-3">
+      <h1 class="flex-grow-1 restaurant_name">Restaurant & Lounge</h1>
+      <button class="btn text-right flex-shrink-1" onclick="showShoppingCart()">
+        <img src="img/carrito.png" alt="carrito" height="50" width="50" />
+      </button>
+      <small id="num-items"></small>
+    </header>
+    <hr />
+    <img class="img-fluid" src="img/header.png" alt="hamburguesa" />
+    <hr />
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-3">
+      <ul class="nav navbar-nav m-3" role="tablist" id="myTab">
+        <li class="nav-item">
+          <a
+            class="nav-link active"
+            data-toggle="tab"
+            href="#burgers"
+            id="tab-burgers"
+            >Burgers</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#tacos" id="tab-tacos"
+            >Tacos</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#salads" id="tab-salads"
+            >Salads</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            data-toggle="tab"
+            href="#desserts"
+            id="tab-desserts"
+            >Desserts</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            data-toggle="tab"
+            href="#drinks-sides"
+            id="tab-drinks-sides"
+            >Drinks & Sides</a
+          >
+        </li>
+      </ul>
+    </nav>
+    <hr />
+    <div class="tab-content">
+      <div class="tab-pane fade show active" id="burgers">
+        <h2 class="text-center"><strong>Burgers</strong></h2>
+        <hr />
+        <div class="row" id="info-burgers"></div>
+      </div>
+      <div class="tab-pane fade" id="tacos">
+        <h2 class="text-center"><strong>Tacos</strong></h2>
+        <hr />
+        <div class="row" id="info-tacos"></div>
+      </div>
+      <div class="tab-pane fade" id="salads">
+        <h2 class="text-center"><strong>Salads</strong></h2>
+        <hr />
+        <div class="row" id="info-salads"></div>
+      </div>
+      <div class="tab-pane fade" id="desserts">
+        <h2 class="text-center"><strong>Desserts</strong></h2>
+        <hr />
+        <div class="row" id="info-desserts"></div>
+      </div>
+      <div class="tab-pane fade" id="drinks-sides">
+        <h2 class="text-center"><strong>Drinks & Sides</strong></h2>
+        <hr />
+        <div class="row" id="info-drinks-sides"></div>
+      </div>
+      <div class="tab-pane fade" id="shopping-cart">
+        <h2 class="text-center"><strong>Order detail</strong></h2>
+        <hr />
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Item</th>
+              <th scope="col">Qty.</th>
+              <th scope="col">Description</th>
+              <th scope="col">Unit Price</th>
+              <th scope="col">Amount</th>
+            </tr>
+          </thead>
+          <tbody id="order-detail"></tbody>
+        </table>
+        <div class="d-flex justify-content-between">
+          <p>
+            <strong>Total:$<span id="total">0.0</span></strong>
+          </p>
+          <div>
+            <button
+              class="btn btn-cancel"
+              data-toggle="modal"
+              data-target="#modal"
+            >
+              Cancel
+            </button>
+            <button class="btn btn-confirm" onclick="showShoppingCartConsole()">
+              Confirm order
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="text-center my-3">
+        <strong
+          >Contact us: +57 3102105253 - info@restaurant.com -
+          @restaurant</strong
+        >
+      </div>
+    </footer>
+
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+      integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+      integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>

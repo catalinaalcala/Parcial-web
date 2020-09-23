@@ -1,0 +1,20 @@
+.btn-cancel {
+  background-color: #ff535c;
+  border-color: #a5c5ca;
+  border-width: 2px;
+}
+
+.btn-confirm {
+  background-color: #f2e8de;
+  border-color: #595450;
+  border-width: 2px;
+}
+
+@font-face {
+  font-family: fuenteTitulo;
+  src: url("./fonts/Satisfy-Regular.ttf");
+}
+
+.restaurant_name {
+  font-family: fuenteTitulo;
+}
